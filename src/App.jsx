@@ -32,6 +32,10 @@ function App() {
     setInputValue("");
   }
 
+  function copyToClipboard() {
+    navigator.clipboard.writeText(output);
+  }
+
   useEffect(() => {
     console.log(inputs);
   }, [inputs]);
@@ -63,9 +67,17 @@ function App() {
                 {output}
               </SyntaxHighlighter>
             </div>
-            <button className="rounded-md hover:shadow-lg hover:shadow-blue-500 transition-all duration-200 ease-in-out hover:-translate-y-[2px] self-center">
+            <button
+              onClick={copyToClipboard}
+              className="rounded-md hover:shadow-lg hover:shadow-blue-500 transition-all duration-200 ease-in-out hover:-translate-y-[2px] self-center mt-4"
+            >
               Copy
             </button>
+            <textarea
+              value={output}
+              onChange={(e) => setOutput(e.target.value)}
+              className="w-full h-48 rounded-lg p-2 border-2 border-gray-300 resize-none mt-4"
+            />
           </div>
         </div>
         <div className="rounded-md border-blue-500 border-2 p-2 mx-12 transform-gpu transition-all duration-200 ease-in-out">
