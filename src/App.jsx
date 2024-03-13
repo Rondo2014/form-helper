@@ -1,0 +1,97 @@
+import { useEffect, useState } from "react";
+import { Prism as SyntaxHighlighter } from "react-syntax-highlighter";
+import { dracula } from "react-syntax-highlighter/dist/esm/styles/prism";
+import "./App.css";
+
+function App() {
+  const [output, setOutput] = useState("");
+  const [inputs, setInputs] = useState([]);
+  const [inputValue, setInputValue] = useState("");
+
+  function totalCost(values) {
+    let output = "let cost = 0;\n";
+
+    values.forEach((input) => {
+      output += `if (${input} !== undefined || ${input} !== null || ${input} !== "") {
+          cost += ${input};
+      }\n`;
+    });
+
+    output += "value = cost;";
+
+    return output;
+  }
+
+  useEffect(() => {
+    setOutput(totalCost(inputs));
+  }, [inputs]);
+
+  function handleSubmit() {
+    const prefixedInputValue = "data." + inputValue;
+    setInputs([...inputs, prefixedInputValue]);
+    setInputValue("");
+  }
+
+  useEffect(() => {
+    console.log(inputs);
+  }, [inputs]);
+
+  return (
+    <>
+      <div className="flex flex-row">
+        <div className="flex flex-col">
+          <div className="mb-4 mx-12 w-full">
+            <input
+              id="textBox"
+              type="text"
+              placeholder="Input Api Key"
+              className="rounded-md p-2 hover:shadow-lg hover:shadow-blue-500 transition-all duration-200 ease-in-out hover:-translate-y-1 border-2 border-blue-500"
+              value={inputValue}
+              onChange={(e) => setInputValue(e.target.value)}
+              onKeyDown={(e) => (e.key === "Enter" ? handleSubmit() : null)}
+            />{" "}
+            <button
+              onClick={handleSubmit}
+              className="rounded-md hover:shadow-lg hover:shadow-blue-500 transition-all duration-200 ease-in-out hover:-translate-y-1"
+            >
+              Submit
+            </button>
+          </div>
+          <div className="col-span-2 rounded-md p-2 mx-12 transform-gpu transition-all duration-200 ease-in-out">
+            <div className="rounded-lg shadow-md shadow-slate-600">
+              <SyntaxHighlighter language="javascript" style={dracula}>
+                {output}
+              </SyntaxHighlighter>
+            </div>
+            <button className="rounded-md hover:shadow-lg hover:shadow-blue-500 transition-all duration-200 ease-in-out hover:-translate-y-[2px] self-center">
+              Copy
+            </button>
+          </div>
+        </div>
+        <div className="rounded-md border-blue-500 border-2 p-2 mx-12 transform-gpu transition-all duration-200 ease-in-out">
+          <h2 className="text-blue-500 font-bold border-b-2 border-blue-400">
+            Api Keys
+          </h2>
+          {inputs.map((input, index) => (
+            <div
+              key={index}
+              className="flex justify-between m-2 border-[1px] rounded-md border-slate-400"
+            >
+              <p className="text-slate-50 p-2">{input}</p>
+              <button
+                onClick={() => {
+                  setInputs(inputs.filter((_, i) => i !== index));
+                }}
+                className="rounded-md hover:shadow-lg hover:shadow-blue-500 transition-all duration-200 ease-in-out"
+              >
+                x
+              </button>
+            </div>
+          ))}
+        </div>
+      </div>
+    </>
+  );
+}
+
+export default App;
