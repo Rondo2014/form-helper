@@ -7,7 +7,7 @@ function Keys({ inputs, setInputs }) {
       {inputs.map((input, index) => (
         <div
           key={index}
-          className="flex justify-between m-2 border-[1px] rounded-md border-slate-400"
+          className="flex justify-between m-2 border-[1px] rounded-md border-slate-400 bg-gray-900"
         >
           <p className="text-slate-50 p-2">{input}</p>
           <button

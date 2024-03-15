@@ -12,5 +12,5 @@ body {
 }
 
 button {
-  @apply bg-gray-600 text-white font-bold py-2 px-4 rounded-lg hover:bg-blue-700 hover:shadow-lg hover:shadow-blue-500 transition-all duration-200 ease-in-out;
+  @apply bg-gray-600 text-white font-bold py-[10px] px-4 rounded-lg hover:bg-blue-700 hover:shadow-lg hover:shadow-blue-500 transition-all duration-200 ease-in-out;
 }
