@@ -34,7 +34,7 @@ function TotalCost({
         <button onClick={handleSubmit}>Submit</button>
       </div>
       <div className="col-span-2 rounded-md p-2 mx-12 transform-gpu transition-all duration-200 ease-in-out">
-        <div className="rounded-lg shadow-md shadow-slate-600">
+        <div className="rounded-lg shadow-md shadow-slate-600 max-h-72 overflow-auto">
           <SyntaxHighlighter language="javascript" style={dracula}>
             {output}
           </SyntaxHighlighter>

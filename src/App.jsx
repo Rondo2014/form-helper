@@ -41,9 +41,8 @@ function App() {
           setInputValue={setInputValue}
           inputs={inputs}
           setInputs={setInputs}
-          className="w-2/3"
         />
-        <Keys inputs={inputs} setInputs={setInputs} className="w-1/3" />
+        <Keys inputs={inputs} setInputs={setInputs} />
       </div>
     </>
   );
