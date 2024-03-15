@@ -1,4 +1,4 @@
-function KeyList(inputs, setInputs) {
+function Keys({ inputs, setInputs }) {
   return (
     <div className="rounded-md border-blue-500 border-2 p-2 mx-12 transform-gpu transition-all duration-200 ease-in-out">
       <h2 className="text-blue-500 font-bold border-b-2 border-blue-400">
@@ -23,5 +23,4 @@ function KeyList(inputs, setInputs) {
     </div>
   );
 }
-
-export default KeyList;
+export default Keys;

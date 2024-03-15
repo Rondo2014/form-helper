@@ -1,7 +1,7 @@
 import { useEffect, useState } from "react";
 import { Prism as SyntaxHighlighter } from "react-syntax-highlighter";
 import { dracula } from "react-syntax-highlighter/dist/esm/styles/prism";
-import KeyList from "./KeyList";
+import Keys from "./Keys";
 
 import "./App.css";
 
@@ -82,7 +82,7 @@ function App() {
             />
           </div>
         </div>
-        <KeyList inputs={inputs} setInputs={setInputs} />
+        <Keys inputs={inputs} setInputs={setInputs} />
       </div>
     </>
   );
