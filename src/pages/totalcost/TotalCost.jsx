@@ -20,7 +20,10 @@ function TotalCost({
     navigator.clipboard.writeText(output);
   }
   return (
-    <div className="grid grid-cols-1 w-full">
+    <div className="grid grid-cols-1 w-full shadow-md shadow-black bg-slate-800 p-4 rounded-lg">
+      <h1 className="text-3xl text-blue-500 font-bold text-center col-span-2 m-2">
+        Total Cost
+      </h1>
       <div className="mb-4 mx-12 w-full">
         <input
           id="textBox"
@@ -45,7 +48,7 @@ function TotalCost({
         <textarea
           value={output}
           onChange={(e) => setOutput(e.target.value)}
-          className="w-full h-48 rounded-lg p-2 border-2 border-gray-300 resize-none mt-4 bg-slate-800 text-white"
+          className="w-full h-48 rounded-lg p-2 border-2 border-gray-300 resize-none mt-4 bg-neutral-800 text-white"
           autoCorrect="false"
         />
       </div>

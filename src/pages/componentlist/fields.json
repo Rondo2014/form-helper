@@ -1,0 +1,91 @@
+[
+  {
+    "title": "Address Field",
+    "description": "Address Field with Google Maps API key and manual address input",
+    "component": {
+      "label": "Address",
+      "enableManualMode": true,
+      "tableView": false,
+      "provider": "google",
+      "key": "address",
+      "type": "address",
+      "providerOptions": {
+        "params": {
+          "autocompleteOptions": {},
+          "key": "AIzaSyBrqmzSVLiSWFczGBxn7K-bJ5TkbJYnPTs"
+        }
+      },
+      "input": true,
+      "components": [
+        {
+          "label": "Address 1",
+          "tableView": false,
+          "key": "address1",
+          "type": "textfield",
+          "input": true,
+          "customConditional": "show = _.get(instance, 'parent.manualMode', false);"
+        },
+        {
+          "label": "Address 2",
+          "tableView": false,
+          "key": "address2",
+          "type": "textfield",
+          "input": true,
+          "customConditional": "show = _.get(instance, 'parent.manualMode', false);"
+        },
+        {
+          "label": "City",
+          "tableView": false,
+          "key": "city",
+          "type": "textfield",
+          "input": true,
+          "customConditional": "show = _.get(instance, 'parent.manualMode', false);"
+        },
+        {
+          "label": "State",
+          "tableView": false,
+          "key": "state",
+          "type": "textfield",
+          "input": true,
+          "customConditional": "show = _.get(instance, 'parent.manualMode', false);"
+        },
+        {
+          "label": "Country",
+          "tableView": false,
+          "key": "country",
+          "type": "textfield",
+          "input": true,
+          "customConditional": "show = _.get(instance, 'parent.manualMode', false);"
+        },
+        {
+          "label": "Zip Code",
+          "tableView": false,
+          "key": "zip",
+          "type": "textfield",
+          "input": true,
+          "customConditional": "show = _.get(instance, 'parent.manualMode', false);"
+        }
+      ]
+    }
+  },
+  {
+    "title": "Upload Field",
+    "description": "Upload Field with azure url configuration",
+    "component": {
+      "label": "Upload",
+      "tableView": false,
+      "storage": "url",
+      "webcam": false,
+      "fileTypes": [
+        {
+          "label": "",
+          "value": ""
+        }
+      ],
+      "key": "file",
+      "type": "file",
+      "input": true,
+      "url": "/formio/azure/upload"
+    }
+  }
+]

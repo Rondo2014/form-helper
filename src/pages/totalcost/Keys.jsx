@@ -1,6 +1,6 @@
 function Keys({ inputs, setInputs }) {
   return (
-    <div className="rounded-md bg-slate-800 border-blue-500 border-2 p-2 mx-12 transform-gpu transition-all duration-200 ease-in-out w-56">
+    <div className="rounded-md bg-slate-800 border-blue-500 border-2 p-2 mx-12 transform-gpu transition-all duration-200 ease-in-out w-56 shadow-lg shadow-black">
       <h2 className="text-blue-500 font-bold border-b-2 border-blue-400">
         Api Keys
       </h2>

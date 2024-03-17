@@ -12,5 +12,33 @@ body {
 }
 
 button {
-  @apply bg-gray-600 text-white font-bold py-[10px] px-4 rounded-lg hover:bg-blue-700 hover:shadow-lg hover:shadow-blue-500 transition-all duration-200 ease-in-out;
+  @apply bg-gray-600 text-white font-bold py-[10px] px-4 rounded-lg hover:bg-blue-700 hover:shadow-lg hover:shadow-blue-500 transition-all duration-500 ease-in-out;
+}
+
+h1 {
+  @apply text-4xl font-bold text-blue-500;
+}
+
+h2 {
+  @apply text-3xl font-bold;
+}
+
+h3 {
+  @apply text-2xl font-bold;
+}
+
+h4 {
+  @apply text-xl font-bold;
+}
+
+p {
+  @apply text-base;
+}
+
+input {
+  @apply bg-gray-900 text-gray-200 font-bold py-2 px-4 rounded-lg;
+}
+
+select {
+  @apply bg-gray-900 text-gray-200 font-bold py-2 px-4 rounded-lg;
 }
