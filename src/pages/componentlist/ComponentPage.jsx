@@ -48,13 +48,12 @@ function ComponentPage() {
 
   function handleRequired(field) {
     const updatedField = { ...field };
-    const checkboxChecked = !required;
-    setRequired(checkboxChecked);
 
-    if (!checkboxChecked) {
-      updatedField.component.validate = { required: false };
-    } else {
+    if (!updatedField.component.validate) {
       updatedField.component.validate = { required: true };
+    } else {
+      updatedField.component.validate.required =
+        !updatedField.component.validate.required;
     }
 
     setSelectedField(updatedField);
@@ -74,7 +73,7 @@ function ComponentPage() {
                 onClick={() => {
                   setSelectedComponent(component);
                   setSelectedField(null);
-                  setCopiedIndex(null); // Reset copied state
+                  setCopiedIndex(null);
                 }}
               >
                 View
@@ -104,7 +103,7 @@ function ComponentPage() {
                 onClick={() => {
                   setSelectedField(field);
                   setSelectedComponent(null);
-                  setCopiedIndex(null); // Reset copied state
+                  setCopiedIndex(null);
                 }}
               >
                 View
@@ -158,16 +157,22 @@ function ComponentPage() {
               Modify
             </button>
           )}
+
           {selectedField && (
             <div className="flex">
-              <p className="text-gray-200 mr-4">Make Required?</p>
               <input
                 type="checkbox"
-                className="bg-gray-900 text-gray-200 font-bold py-2 px-4 rounded-lg mr-4"
+                checked={
+                  selectedField.component.validate &&
+                  selectedField.component.validate.required
+                }
+                className="bg-gray-900 text-gray-200 font-bold py-2 px-4 rounded-lg mr-2"
                 onChange={() => handleRequired(selectedField)}
               />
+              <p className="text-gray-200 mr-2">Make Required?</p>
             </div>
           )}
+
           <button
             className={copiedIndex !== null ? "bg-green-600" : ""}
             onClick={() => handleCopyPreview(selectedComponent, selectedField)}
