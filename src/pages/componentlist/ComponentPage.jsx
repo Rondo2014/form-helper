@@ -10,6 +10,7 @@ function ComponentPage() {
   const [copiedIndex, setCopiedIndex] = useState(null);
   const [inputValue, setInputValue] = useState("");
   const [required, setRequired] = useState(false);
+  const [addedFees, setAddedFees] = useState([]);
 
   function handleCopyComponent(index) {
     const componentToCopy = jsonData[index].component;
@@ -21,7 +22,7 @@ function ComponentPage() {
     navigator.clipboard.writeText(
       JSON.stringify(selectedField.component, null, 2)
     );
-    setCopiedIndex(index + jsonData.length); // Adjust index to avoid overlap
+    setCopiedIndex(index + jsonData.length);
   }
 
   function handleCopyPreview() {
@@ -30,6 +31,50 @@ function ComponentPage() {
     } else if (selectedField) {
       handleCopyField(selectedField);
     }
+  }
+
+  function handleCopyWithFees() {
+    const updatedComponent = { ...selectedComponent };
+
+    addedFees.forEach(({ name, amount }) => {
+      const newFee = {
+        label: name,
+        applyMaskOn: "change",
+        mask: false,
+        spellcheck: true,
+        disabled: true,
+        tableView: false,
+        currency: "USD",
+        inputFormat: "plain",
+        truncateMultipleSpaces: false,
+        clearOnHide: false,
+        key: name
+          .replace(/(?:^\w|[A-Z]|\b\w)/g, function (word, index) {
+            return index === 0 ? word.toLowerCase() : word.toUpperCase();
+          })
+          .replace(/\s+/g, ""),
+        type: "currency",
+        input: true,
+        delimiter: true,
+        defaultValue: parseInt(amount),
+      };
+
+      updatedComponent.component.components[0].columns.push({
+        components: [newFee],
+        width: 4,
+        offset: 0,
+        push: 0,
+        pull: 0,
+        size: "md",
+        currentWidth: 4,
+      });
+    });
+
+    navigator.clipboard.writeText(
+      JSON.stringify(updatedComponent.component, null, 2)
+    );
+
+    setCopiedIndex(null);
   }
 
   function handleSubmit(input) {
@@ -57,6 +102,15 @@ function ComponentPage() {
     }
 
     setSelectedField(updatedField);
+  }
+
+  function handleAddFee(name, amount) {
+    const newFee = {
+      name,
+      amount,
+    };
+
+    setAddedFees([...addedFees, newFee]);
   }
 
   return (
@@ -140,6 +194,54 @@ function ComponentPage() {
                 : selectedField.description}
             </p>
           </div>
+          {selectedComponent && selectedComponent.title === "Fee Panel" && (
+            <div className="flex flex-col flex-wrap">
+              <div>
+                <input
+                  type="text"
+                  placeholder="Fee Name"
+                  value={inputValue.name}
+                  onChange={(e) =>
+                    setInputValue({ ...inputValue, name: e.target.value })
+                  }
+                  className="mr-2 mb-2"
+                />
+                <input
+                  type="text"
+                  placeholder="Fee Amount"
+                  value={inputValue.amount}
+                  onChange={(e) =>
+                    setInputValue({ ...inputValue, amount: e.target.value })
+                  }
+                  className="mr-2 mb-2"
+                />
+                <button
+                  className="mr-2 mb-2"
+                  onClick={() =>
+                    handleAddFee(inputValue.name, inputValue.amount)
+                  }
+                >
+                  Add Fee
+                </button>
+              </div>
+              {addedFees.length > 0 && (
+                <div>
+                  <h2>Added Fees</h2>
+                  <ul className="flex flex-wrap overflow-auto max-h-56">
+                    {addedFees.map((fee, index) => (
+                      <li
+                        key={index}
+                        className="border-2 border-white rounded-md shadow-lg shadow-black mr-2 my-2 p-4 bg-slate-900"
+                      >
+                        <p className=" text-blue-600">{fee.name}</p>
+                        <p className=" text-green-600">${fee.amount}</p>
+                      </li>
+                    ))}
+                  </ul>
+                </div>
+              )}
+            </div>
+          )}
           {selectedField && (
             <input
               type="text"
@@ -175,7 +277,11 @@ function ComponentPage() {
 
           <button
             className={copiedIndex !== null ? "bg-green-600" : ""}
-            onClick={() => handleCopyPreview(selectedComponent, selectedField)}
+            onClick={
+              selectedComponent && selectedComponent.title === "Fee Panel"
+                ? handleCopyWithFees
+                : handleCopyPreview
+            }
           >
             {copiedIndex !== null ? "Copied \u2713" : "Copy"}
           </button>
@@ -183,7 +289,56 @@ function ComponentPage() {
             <SyntaxHighlighter language="json" style={dracula}>
               {JSON.stringify(
                 selectedComponent
-                  ? selectedComponent && selectedComponent.component
+                  ? {
+                      ...selectedComponent.component,
+                      components: [
+                        ...selectedComponent.component.components.slice(0, -1), // Exclude the "New Fee" component
+                        {
+                          ...selectedComponent.component.components[
+                            selectedComponent.component.components.length - 1
+                          ],
+                          columns: [
+                            ...(selectedComponent.component.components[
+                              selectedComponent.component.components.length - 1
+                            ].columns || []),
+                            {
+                              components: addedFees.map(({ name, amount }) => ({
+                                label: name,
+                                applyMaskOn: "change",
+                                mask: false,
+                                spellcheck: true,
+                                disabled: true,
+                                tableView: false,
+                                currency: "USD",
+                                inputFormat: "plain",
+                                truncateMultipleSpaces: false,
+                                clearOnHide: false,
+                                key: name
+                                  .replace(
+                                    /(?:^\w|[A-Z]|\b\w)/g,
+                                    function (word, index) {
+                                      return index === 0
+                                        ? word.toLowerCase()
+                                        : word.toUpperCase();
+                                    }
+                                  )
+                                  .replace(/\s+/g, ""),
+                                type: "currency",
+                                input: true,
+                                delimiter: true,
+                                defaultValue: parseInt(amount),
+                              })),
+                              width: 4,
+                              offset: 0,
+                              push: 0,
+                              pull: 0,
+                              size: "md",
+                              currentWidth: 4,
+                            },
+                          ],
+                        },
+                      ],
+                    }
                   : selectedField && selectedField.component,
                 null,
                 2
