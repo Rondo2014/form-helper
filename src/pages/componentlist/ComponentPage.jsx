@@ -8,7 +8,7 @@ function ComponentPage() {
   const [selectedComponent, setSelectedComponent] = useState(null);
   const [selectedField, setSelectedField] = useState(null);
   const [copiedIndex, setCopiedIndex] = useState(null);
-  const [inputValue, setInputValue] = useState("");
+  const [inputValue, setInputValue] = useState({ name: "", amount: "" });
   const [required, setRequired] = useState(false);
   const [addedFees, setAddedFees] = useState([]);
 
