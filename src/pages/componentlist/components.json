@@ -390,5 +390,29 @@
         }
       ]
     }
+  },
+  {
+    "title": "Fee Panel",
+    "description": "Hidden panel for fee information and calculations.",
+    "component": {
+      "title": "Fees",
+      "collapsible": false,
+      "hidden": true,
+      "key": "fees",
+      "type": "panel",
+      "label": "Panel",
+      "input": false,
+      "tableView": false,
+      "components": [
+        {
+          "label": "Columns",
+          "columns": [{}],
+          "key": "columns",
+          "type": "columns",
+          "input": false,
+          "tableView": false
+        }
+      ]
+    }
   }
 ]
